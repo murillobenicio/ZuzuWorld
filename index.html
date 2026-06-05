@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nossa História 💜</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&family=Caveat:wght@400;600;700&display=swap');
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Quicksand',sans-serif;
+
+    background:
+    linear-gradient(
+        180deg,
+        #000 0%,
+        #000 35%,
+        #fff7fb 35%,
+        #ffeaf4 100%
+    );
+
+    color:#444;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    height:100vh;
+    position:relative;
+    overflow:hidden;
+    background:#000;
+    margin-bottom:40px;
+}
+
+.videos-grid{
+    position:absolute;
+    inset:0;
+    display:flex;
+}
+
+.videos-grid video{
+    flex:1;
+    width:33.33%;
+    height:100%;
+    object-fit:cover;
+}
+
+.hero::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    z-index:1;
+}
+
+.hero-content{
+    position:absolute;
+    inset:0;
+    z-index:2;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+    color:white;
+    padding:20px;
+}
+
+.hero-content h1{
+    font-size:4rem;
+    margin-bottom:15px;
+    text-shadow:0 0 25px rgba(0,0,0,.8);
+}
+
+.hero-content p{
+    max-width:700px;
+    font-size:1.2rem;
+    text-shadow:0 0 10px rgba(0,0,0,.8);
+}
+
+/* ================= CONTEÚDO ================= */
+
+.texto-lateral{
+    position:absolute;
+    z-index:2;
+    width:28%;
+    color:white;
+}
+
+.esquerda{
+    left:4%;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.direita{
+    right:4%;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.bloco-romantico{
+    margin-bottom:60px;
+}
+
+.bloco-romantico h3{
+
+    font-family:'Caveat',cursive;
+
+    font-size:clamp(42px,3vw,70px);
+
+    font-weight:700;
+
+    line-height:1;
+
+    color:#ff8db7;
+
+    margin-bottom:20px;
+
+    text-shadow:
+        0 0 12px rgba(255,141,183,.6),
+        0 0 25px rgba(255,141,183,.3);
+
+}
+
+.bloco-romantico p{
+
+    font-family:'Caveat',cursive;
+
+    font-size:clamp(24px,1.8vw,42px);
+
+    font-weight:600;
+
+    line-height:1.2;
+
+    color:white;
+
+    text-shadow:
+        0 0 10px rgba(255,255,255,.15);
+
+}
+
+.decoracao{
+
+    text-align:center;
+
+    font-size:40px;
+
+    color:#ff8db7;
+
+    margin:35px 0;
+
+    opacity:.9;
+
+}
+
+/* ================= SEÇÃO MOMENTOS ================= */
+
+section{
+
+    width:90%;
+    max-width:1400px;
+
+    margin:0 auto;
+
+    padding:80px 0 100px 0;
+
+}
+
+.titulo{
+
+    text-align:center;
+
+    margin-bottom:50px;
+
+}
+
+.titulo h2{
+
+    font-size:3rem;
+
+    font-weight:700;
+
+    background:linear-gradient(
+        90deg,
+        #ff8db7,
+        #7c4dff
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    margin-bottom:10px;
+
+}
+
+.titulo::after{
+
+    content:"✦ ✦ ✦";
+
+    display:block;
+
+    color:#ff8db7;
+
+    letter-spacing:10px;
+
+    font-size:1.1rem;
+
+}
+
+/* ================= CARDS ================= */
+
+.galeria{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:white;
+    border-radius:25px;
+    overflow:hidden;
+    cursor:pointer;
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+}
+
+.card img{
+    width:100%;
+    height:350px;
+    object-fit:cover;
+    transition:.4s;
+}
+
+.card:hover img{
+    transform:scale(1.08);
+}
+
+.card-info{
+    padding:20px;
+    text-align:center;
+}
+
+.card-info h3{
+    color:#d96ba0;
+    margin-bottom:10px;
+}
+
+.card-info p{
+    color:#777;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+    padding:20px;
+}
+
+.modal-content{
+    width:90%;
+    max-width:1200px;
+    min-height:650px;
+
+    display:flex;
+    background:white;
+    border-radius:25px;
+    overflow:hidden;
+}
+
+.modal-img{
+    width:40%;
+    max-width:450px;
+    max-height:600px;
+
+    object-fit:contain;
+
+    background:#111;
+
+    margin:25px;
+    border-radius:18px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.modal-body{
+    width:60%;
+    padding:40px;
+    overflow-y:auto;
+}
+
+@keyframes aparecer{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+.modal-body h2{
+    color:#d96ba0;
+    margin-bottom:15px;
+}
+
+.modal-body p{
+    line-height:1.8;
+    white-space:normal; 
+}
+
+.controles{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-top:25px;
+}
+
+.controles button{
+    border:none;
+    background:#ff8db7;
+    color:white;
+    padding:12px 22px;
+    border-radius:50px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.controles button:hover{
+    background:#ff6ea4;
+}
+
+.fechar{
+    position:absolute;
+    top:20px;
+    right:30px;
+    font-size:45px;
+    color:white;
+    cursor:pointer;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    text-align:center;
+    padding:60px 20px;
+    color:#888;
+}
+
+footer h3{
+    color:#d96ba0;
+    margin-bottom:10px;
+}
+
+/* ================= RESPONSIVO ================= */
+
+@media(max-width:768px){
+
+    .texto-lateral{
+    display:none;
+}
+
+    .videos-grid{
+        flex-direction:column;
+    }
+
+    .videos-grid video{
+        width:100%;
+        height:33.33%;
+    }
+
+    .hero-content h1{
+        font-size:2.5rem;
+    }
+
+    .modal-content{
+        flex-direction:column;
+        min-height:auto;
+    }
+
+    .modal-img{
+        width:100%;
+        height:350px;
+    }
+
+    .modal-body{
+        width:100%;
+        padding:25px;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+
+<div class="hero">
+
+    <div class="videos-grid">
+
+        <div class="texto-lateral esquerda">
+
+    <div class="bloco-romantico">
+
+        <h3>
+            Nosso começo<br>
+            foi inesperado.
+        </h3>
+
+        <p>
+            Talvez por isso tenha sido tão perfeito.
+            Quando menos esperávamos,
+            a vida já tinha escrito
+            planos lindos pra gente.
+        </p>
+
+    </div>
+
+    <div class="decoracao">
+        • ♥ •
+    </div>
+
+    <div class="bloco-romantico">
+
+        <h3>
+            Desde então,
+            cada dia ao seu lado
+            faz mais sentido.
+        </h3>
+
+        <p>
+            Você virou meu lar,
+            meu abrigo
+            e minha melhor escolha.
+        </p>
+
+    </div>
+
+</div>
+
+<div class="texto-lateral direita">
+
+    <div class="bloco-romantico">
+
+        <h3>
+            Com você,
+            os dias comuns viraram
+            lembranças especiais.
+        </h3>
+
+        <p>
+            As pequenas coisas
+            ficaram gigantes.
+            Os momentos simples
+            viraram histórias
+            que eu vou guardar
+            pra sempre.
+        </p>
+
+    </div>
+
+    <div class="decoracao">
+        • ♥ •
+    </div>
+
+    <div class="bloco-romantico">
+
+        <h3>
+            Obrigada por ser
+            meu melhor capítulo.
+        </h3>
+
+        <p>
+            Que nossa história continue
+            sendo escrita com amor,
+            cumplicidade
+            e muitos sonhos juntos.
+        </p>
+
+    </div>
+
+</div>
+
+        <video autoplay muted loop playsinline>
+            <source src="imagens/videos/video1.mp4" type="video/mp4">
+        </video>
+
+        <video autoplay muted loop playsinline>
+            <source src="imagens/videos/video2.mp4" type="video/mp4">
+        </video>
+
+        <video autoplay muted loop playsinline>
+            <source src="imagens/videos/video3.mp4" type="video/mp4">
+        </video>
+
+    </div>
+
+    <div class="hero-content">
+
+        <h1>Nossa História 💜</h1>
+
+        <p>
+            Algumas pessoas entram na nossa vida por acaso.
+            Outras parecem ter sido destinadas a entrar.
+        </p>
+
+    </div>
+
+</div>
+
+<!-- GALERIA -->
+
+<section>
+
+    <div class="titulo">
+        <h2>Momentos Especiais</h2>
+    </div>
+
+    <div class="galeria">
+
+        <div class="card" onclick="abrir(0)">
+            <img src="imagens/primeira/1.jpeg" alt="">
+            <div class="card-info">
+                <h3>Primeira Impressão</h3>
+                <p>Clique para relembrar esse momento.</p>
+            </div>
+        </div>
+
+        <div class="card" onclick="abrir(1)">
+            <img src="imagens/sonho/1.jpeg" alt="">
+            <div class="card-info">
+                <h3>Início de um Sonho</h3>
+                <p>Clique para relembrar esse momento.</p>
+            </div>
+        </div>
+
+        <div class="card" onclick="abrir(2)">
+            <img src="imagens/destino/1.jpeg" alt="">
+            <div class="card-info">
+                <h3>Destino?</h3>
+                <p>Clique para relembrar esse momento.</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+    <span class="fechar" onclick="fechar()">&times;</span>
+
+    <div class="modal-content">
+
+        <img id="imagemModal" class="modal-img" src="" alt="">
+
+        <div class="modal-body">
+
+            <h2 id="tituloModal"></h2>
+
+            <p id="textoModal"></p>
+
+            <div class="controles">
+                <button onclick="anterior()">⬅ Anterior</button>
+                <button onclick="proxima()">Próxima ➡</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<audio id="musica" loop>
+    <source src="musica/musica.mp3" type="audio/mpeg">
+</audio>
+
+<footer>
+
+    <h3>Fim? Ainda não. 💜</h3>
+
+    <p>
+        Porque algumas histórias não foram feitas para terminar.
+    </p>
+
+</footer>
+
+<script>
+
+const memorias = [
+
+{
+titulo:"Primeira Impressão",
+
+texto:`É meio estranho dizer que talvez nem parece que ficamos apreensivos a primeira vez que conversamos.
+
+Um estranho mandando mensagem para falar de desenho kkkkk.
+
+Não foi exatamente a chegada mais emocionante do mundo, mas fico feliz que você tenha dado atenção para esse idiota que está escrevendo esta página.
+
+Nem dá para imaginar que uma MODELO me daria atenção.
+
+Meus amigos e minha família tinham certeza absoluta que era golpe.
+
+E mesmo assim lá estávamos nós, conversando todos os dias como se fôssemos dois malucos que não ligavam para o que diziam ao redor.`,
+
+fotos:[
+"imagens/primeira/1.jpeg",
+"imagens/primeira/2.jpeg",
+"imagens/primeira/3.jpeg"
+]
+},
+
+{
+titulo:"Início de um Sonho",
+
+texto:`Quem diria que tudo começaria por causa de uma aposta?
+
+Dois cabeças-duras que não sabem quando desistir.
+
+Tudo começou com um "eu duvido", um "quando isso acontecer" e um "então vamos marcar para ver".
+
+Se você não fosse tão maluca quanto eu, acho que nada disso teria dado tão certo.
+
+Porque sinceramente... quem em sã consciência viaja para conhecer alguém que nunca viu pessoalmente?
+
+E mesmo assim os dois malucos foram se encontrar.`,
+
+fotos:[
+"imagens/sonho/1.jpeg",
+"imagens/sonho/2.jpeg",
+"imagens/sonho/3.jpeg"
+]
+},
+
+{
+titulo:"Destino?",
+
+texto:`Cara, acho que nunca dei um rolê tão relaxante e libertador quanto esse nosso date. Fomos e fizemos tudo o que estava planejado e, se duvidar, até mais.
+
+Fomos enganados por um pão de forma na feira, visitamos o Japão no Brasil, dividimos pokes e a nossa sorte, vimos vários Magikarps para o jantar, fomos tirar cartinhas Pokémon e descobri que você não gosta do maior farmador de aura de One Piece.
+
+Teve também aquele restaurante em que você estava morrendo de vergonha de entrar, mas aparentemente gostou da comida. Tivemos as fotos na cabine, a visita aos macacos (com participação especial da capivara), vimos um filme, te mostrei que sou o melhor nos games e ainda colocamos uma coroa para declarar que aquele shopping era nosso.
+
+A parte mais triste foi ter que me despedir para ir embora.
+
+Um único dia tão incrível que me marcou muito.`,
+
+fotos:[
+"imagens/destino/1.jpeg",
+"imagens/destino/2.jpeg",
+"imagens/destino/3.jpeg"
+]
+}
+
+];
+
+let memoriaAtual = 0;
+let fotoAtual = 0;
+
+const musica = document.getElementById("musica");
+
+musica.volume = 0.25;
+
+document.addEventListener("click", () => {
+    musica.play();
+}, { once:true });
+
+function abrir(indice){
+
+    memoriaAtual = indice;
+    fotoAtual = 0;
+
+    document.getElementById("modal").style.display = "flex";
+
+    atualizar();
+
+}
+
+function fechar(){
+
+    document.getElementById("modal").style.display = "none";
+
+}
+
+function atualizar(){
+
+    document.getElementById("tituloModal").innerText =
+    memorias[memoriaAtual].titulo;
+
+    document.getElementById("textoModal").innerText =
+    memorias[memoriaAtual].texto;
+
+    document.getElementById("imagemModal").src =
+    memorias[memoriaAtual].fotos[fotoAtual];
+
+}
+
+function proxima(){
+
+    fotoAtual++;
+
+    if(fotoAtual >= memorias[memoriaAtual].fotos.length){
+        fotoAtual = 0;
+    }
+
+    atualizar();
+
+}
+
+function anterior(){
+
+    fotoAtual--;
+
+    if(fotoAtual < 0){
+        fotoAtual = memorias[memoriaAtual].fotos.length - 1;
+    }
+
+    atualizar();
+
+}
+
+window.onclick = function(event){
+
+    const modal = document.getElementById("modal");
+
+    if(event.target === modal){
+        fechar();
+    }
+
+}
+
+</script>
+
+</body>
+</html>
