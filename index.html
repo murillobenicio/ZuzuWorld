@@ -378,26 +378,6 @@ footer h3{
 
 @media (max-width:768px){
 
-    .texto-lateral{
-        position:relative;
-        display:block;
-        width:90%;
-        margin:20px auto;
-        left:auto;
-        right:auto;
-        top:auto;
-        transform:none;
-        text-align:center;
-    }
-
-    .esquerda,
-    .direita{
-        left:auto;
-        right:auto;
-        top:auto;
-        transform:none;
-    }
-
     .hero{
         height:auto;
         min-height:100vh;
@@ -405,35 +385,75 @@ footer h3{
 
     .videos-grid{
         flex-direction:column;
+        position:relative;
     }
 
     .videos-grid video{
         width:100%;
-        height:250px;
+        height:220px;
+        object-fit:cover;
     }
 
-    .bloco-romantico h3{
-        font-size:2.2rem;
+    .texto-lateral{
+        position:absolute;
+        width:90%;
+        left:50%;
+        transform:translateX(-50%);
+        z-index:3;
+        text-align:center;
+    }
+
+    .esquerda{
+        top:15px;
+    }
+
+    .direita{
+        bottom:15px;
+    }
+
+    /* mostra apenas o primeiro texto de cada lado */
+    .texto-lateral .bloco-romantico:nth-child(n+3){
+        display:none;
+    }
+
+    .bloco-romantico{
         margin-bottom:10px;
     }
 
+    .bloco-romantico h3{
+        font-size:1.8rem;
+        line-height:1.1;
+        margin-bottom:8px;
+    }
+
     .bloco-romantico p{
-        font-size:1.5rem;
+        font-size:1rem;
+        line-height:1.3;
+    }
+
+    .decoracao{
+        display:none;
     }
 
     .hero-content{
-        position:relative;
-        margin-top:40px;
-        padding:30px;
+        position:absolute;
+        inset:0;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        flex-direction:column;
+        z-index:4;
+        padding:20px;
     }
 
     .hero-content h1{
         font-size:3rem;
-        margin-bottom:20px;
+        margin-bottom:15px;
     }
 
     .hero-content p{
-        font-size:1.1rem;
+        font-size:1rem;
+        max-width:90%;
     }
 
     .galeria{
@@ -486,7 +506,6 @@ footer h3{
     .controles{
         flex-wrap:wrap;
     }
-
 }
 
 }
