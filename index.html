@@ -395,45 +395,47 @@ footer h3{
     }
 
     .texto-lateral{
-        position:absolute;
-        width:90%;
-        left:50%;
-        transform:translateX(-50%);
-        z-index:3;
-        text-align:center;
-    }
+    position:absolute;
+    width:90%;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:3;
+    text-align:center;
+}
 
-    .esquerda{
-        top:15px;
-    }
+.esquerda{
+    top:15px;
+}
 
-    .direita{
-        bottom:15px;
-    }
+.direita{
+    bottom:15px;
+}
 
-    /* mostra apenas o primeiro texto de cada lado */
-    .texto-lateral .bloco-romantico:nth-child(n+3){
-        display:none;
-    }
+/* Esconde todos por padrão */
+.bloco-romantico{
+    display:none;
+    margin-bottom:10px;
+}
 
-    .bloco-romantico{
-        margin-bottom:10px;
-    }
+/* Mostra apenas o que o JS ativar */
+.bloco-romantico.ativo{
+    display:block;
+}
 
-    .bloco-romantico h3{
-        font-size:1.8rem;
-        line-height:1.1;
-        margin-bottom:8px;
-    }
+.bloco-romantico h3{
+    font-size:1.8rem;
+    line-height:1.1;
+    margin-bottom:8px;
+}
 
-    .bloco-romantico p{
-        font-size:1rem;
-        line-height:1.3;
-    }
+.bloco-romantico p{
+    font-size:1rem;
+    line-height:1.3;
+}
 
-    .decoracao{
-        display:none;
-    }
+.decoracao{
+    display:none;
+}
 
     .hero-content{
         position:absolute;
@@ -852,6 +854,32 @@ window.onclick = function(event){
         fechar();
     }
 
+}
+
+    if(window.innerWidth <= 768){
+
+    const blocosEsquerda =
+        document.querySelectorAll(".esquerda .bloco-romantico");
+
+    const blocosDireita =
+        document.querySelectorAll(".direita .bloco-romantico");
+
+    let indice = 0;
+
+    function trocarTextos(){
+
+        blocosEsquerda.forEach(b => b.classList.remove("ativo"));
+        blocosDireita.forEach(b => b.classList.remove("ativo"));
+
+        blocosEsquerda[indice].classList.add("ativo");
+        blocosDireita[indice].classList.add("ativo");
+
+        indice = indice === 0 ? 1 : 0;
+    }
+
+    trocarTextos();
+
+    setInterval(trocarTextos, 8000);
 }
 
 </script>
