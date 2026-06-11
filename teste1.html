@@ -219,7 +219,7 @@ body {
   position: relative;
   overflow: hidden;
   background: #000;
-  margin-bottom: 0;
+  margin-bottom: 40px;
 }
 
 .videos-grid { position:absolute; inset:0; display:flex; }
@@ -324,9 +324,6 @@ section.galeria-section {
   max-width:1400px;
   margin:0 auto;
   padding:80px 0 60px;
-  background: transparent;
-  position: relative;
-  z-index: 1;
 }
 
 .titulo { text-align:center; margin-bottom:50px; }
@@ -661,24 +658,10 @@ footer h3 { color:var(--rose-deep); margin-bottom:10px; font-size:1.4rem; }
 
 /* ================= RESPONSIVO ================= */
 @media (max-width:768px) {
-  /* Hero: mantém o grid de vídeos absoluto, hero tem altura fixa */
-  .hero {
-    height: 100svh;
-    min-height: 600px;
-    padding-bottom: 0;
-  }
+  .hero { min-height:100vh; height:auto; padding-bottom:30vh; }
 
-  .videos-grid {
-    flex-direction: column;
-    position: absolute;
-    inset: 0;
-  }
-
-  .videos-grid video {
-    width: 100%;
-    height: 33.33%;
-    flex: none;
-  }
+  .videos-grid { flex-direction:column; position:relative; }
+  .videos-grid video { width:100%; height:33.33vh; }
 
   .texto-lateral { position:absolute; width:90%; left:50%; transform:translateX(-50%); z-index:3; text-align:center; }
   .esquerda { top:2vh; }
@@ -967,40 +950,29 @@ footer h3 { color:var(--rose-deep); margin-bottom:10px; font-size:1.4rem; }
     <span class="poema-modal-fechar" onclick="fecharPoema()">✕</span>
     <h2 class="poema-titulo">✦ Para Você ✦</h2>
 
+    <!-- =====================================================
+         SUBSTITUA AS ESTROFES ABAIXO PELO SEU POEMA.
+         Cada <p class="poema-verso"> é uma estrofe.
+         ===================================================== -->
 
-    <p class="poema-verso">
-Você me reflete o amarelo;
-Alegre, disposta e radiante;
-Sempre em lugares distantes;
-A princesa de um castelo.
-</p>
-
-    <div class="poema-divisor">✦ ✦ ✦</div>
-
-    <p class="poema-verso">
-Mas isso traz um problema;
-Mesmo amarelo, vc flerta com vermelho;
-Ama todos sem ver espelho;
-Isso é ser deusa suprema.
-</p>
+    <p class="poema-verso">Antes de você, eu não sabia
+que o coração podia bater assim —
+acelerado sem pressa,
+cheio sem precisar de mais nada.</p>
 
     <div class="poema-divisor">✦ ✦ ✦</div>
 
-    <p class="poema-verso">
-E agora me complica;
-Vi um pedaço de tinta;
-O rosa se eterniza;
-E o roxo me hipnotiza.
-</p>
+    <p class="poema-verso">Você chegou de mansinho,
+como chegam as coisas que ficam.
+Sem aviso, sem roteiro —
+só chegou, e fez sentido.</p>
 
     <div class="poema-divisor">✦ ✦ ✦</div>
 
-    <p class="poema-verso">
-Uma mistura de cores;
-Muitos sabores;
-Amo desfrutar dessa mistura;
-Estou louco para continuar essa aventura.
-</p>
+    <p class="poema-verso">E agora cada dia é uma prova
+de que às vezes a vida
+sabe muito mais do que a gente
+o que a gente precisa.</p>
 
   </div>
 </div>
