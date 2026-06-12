@@ -6,857 +6,363 @@
 <title>Nossa História 💜</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
-
 <style>
 /* ================= RESET & TOKENS ================= */
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
-:root {
-  --rose:      #ff8db7;
-  --rose-deep: #d96ba0;
-  --rose-soft: #ffeaf4;
-  --violet:    #7c4dff;
-  --white:     #ffffff;
-  --ink:       #444444;
-  --muted:     #888888;
-  --card-shadow: 0 15px 40px rgba(217,107,160,.13);
-  --radius-lg: 25px;
-  --radius-md: 18px;
-  --ease: cubic-bezier(.4,0,.2,1);
-  --transition: .3s var(--ease);
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --rose:#ff8db7;--rose-deep:#d96ba0;--rose-soft:#ffeaf4;
+  --violet:#7c4dff;--white:#fff;--ink:#444;--muted:#888;
+  --card-shadow:0 15px 40px rgba(217,107,160,.13);
+  --radius-lg:25px;--radius-md:18px;
+  --ease:cubic-bezier(.4,0,.2,1);--t:.3s var(--ease);
 }
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
+body{font-family:'Quicksand',sans-serif;background:#fff7fb;color:var(--ink);overflow-x:hidden;}
+
+/* ================= LOADING ================= */
+#loading-screen{
+  position:fixed;inset:0;z-index:99999;background:#000;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:28px;
+  transition:opacity .8s ease,visibility .8s ease;
 }
+#loading-screen.saindo{opacity:0;visibility:hidden;pointer-events:none;}
+.loading-heart{font-size:3.5rem;animation:batimento .8s ease infinite;}
+@keyframes batimento{0%,100%{transform:scale(1);}50%{transform:scale(1.25);}}
+.loading-bar-wrap{width:220px;height:3px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden;}
+.loading-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--rose),var(--violet));border-radius:99px;transition:width .05s linear;}
+.loading-texto{font-family:'Caveat',cursive;font-size:1.3rem;color:rgba(255,255,255,.5);letter-spacing:.05em;}
 
-body {
-  font-family: 'Quicksand', sans-serif;
-  background: #fff7fb;
-  color: var(--ink);
-  overflow-x: hidden;
+/* ================= AUTH ================= */
+#auth-overlay{
+  position:fixed;inset:0;z-index:9999;background:#000;
+  display:flex;justify-content:center;align-items:center;padding:20px;
+  transition:opacity .6s ease,visibility .6s ease;
 }
-
-/* ================= LOADING SCREEN ================= */
-#loading-screen {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  background: #000;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 28px;
-  transition: opacity .8s ease, visibility .8s ease;
+#auth-overlay.saindo{opacity:0;visibility:hidden;pointer-events:none;}
+#particles-canvas{position:absolute;inset:0;pointer-events:none;}
+.auth-card{
+  position:relative;z-index:2;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,141,183,.2);border-radius:var(--radius-lg);
+  padding:50px 40px;width:100%;max-width:440px;text-align:center;
+  backdrop-filter:blur(12px);animation:subir .6s ease both;
 }
-
-#loading-screen.saindo { opacity:0; visibility:hidden; pointer-events:none; }
-
-.loading-heart {
-  font-size: 3.5rem;
-  animation: batimento .8s ease infinite;
+@keyframes subir{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+.auth-card .emoji{font-size:3rem;margin-bottom:20px;display:block;animation:pulse 2.5s ease infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
+.auth-card h2{font-family:'Caveat',cursive;font-size:2.2rem;color:var(--rose);margin-bottom:8px;}
+.auth-pergunta{color:rgba(255,255,255,.65);font-size:.93rem;margin-bottom:6px;line-height:1.6;}
+.auth-dica{color:rgba(255,141,183,.6);font-size:.78rem;margin-bottom:26px;font-style:italic;}
+.auth-card input{
+  width:100%;padding:14px 20px;border:1.5px solid rgba(255,141,183,.3);border-radius:50px;
+  background:rgba(255,255,255,.07);color:white;font-family:'Quicksand',sans-serif;
+  font-size:1rem;text-align:center;outline:none;
+  transition:border-color var(--t),box-shadow var(--t);margin-bottom:14px;
 }
-
-@keyframes batimento {
-  0%,100% { transform: scale(1); }
-  50%      { transform: scale(1.25); }
+.auth-card input::placeholder{color:rgba(255,255,255,.3);}
+.auth-card input:focus{border-color:var(--rose);box-shadow:0 0 0 3px rgba(255,141,183,.2);}
+.auth-card button{
+  width:100%;padding:14px;background:linear-gradient(90deg,var(--rose),var(--violet));
+  color:white;border:none;border-radius:50px;font-family:'Quicksand',sans-serif;
+  font-size:1rem;font-weight:700;cursor:pointer;transition:opacity var(--t),transform var(--t);
 }
-
-.loading-bar-wrap {
-  width: 220px;
-  height: 3px;
-  background: rgba(255,255,255,.1);
-  border-radius: 99px;
-  overflow: hidden;
-}
-
-.loading-bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--rose), var(--violet));
-  border-radius: 99px;
-  transition: width .05s linear;
-}
-
-.loading-texto {
-  font-family: 'Caveat', cursive;
-  font-size: 1.3rem;
-  color: rgba(255,255,255,.5);
-  letter-spacing: .05em;
-}
-
-/* ================= AUTH OVERLAY ================= */
-#auth-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  transition: opacity .6s ease, visibility .6s ease;
-}
-
-#auth-overlay.saindo { opacity:0; visibility:hidden; pointer-events:none; }
-
-/* Canvas de partículas fica atrás do card */
-#particles-canvas {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.auth-card {
-  position: relative;
-  z-index: 2;
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,141,183,.2);
-  border-radius: var(--radius-lg);
-  padding: 50px 40px;
-  width: 100%;
-  max-width: 440px;
-  text-align: center;
-  backdrop-filter: blur(12px);
-  animation: subir .6s ease both;
-}
-
-@keyframes subir {
-  from { opacity:0; transform:translateY(30px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-
-.auth-card .emoji {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  display: block;
-  animation: pulse 2.5s ease infinite;
-}
-
-@keyframes pulse {
-  0%,100% { transform:scale(1); }
-  50%      { transform:scale(1.1); }
-}
-
-.auth-card h2 {
-  font-family: 'Caveat', cursive;
-  font-size: 2.2rem;
-  color: var(--rose);
-  margin-bottom: 8px;
-}
-
-.auth-pergunta {
-  color: rgba(255,255,255,.65);
-  font-size: .93rem;
-  margin-bottom: 6px;
-  line-height: 1.6;
-}
-
-.auth-dica {
-  color: rgba(255,141,183,.6);
-  font-size: .78rem;
-  margin-bottom: 26px;
-  font-style: italic;
-}
-
-.auth-card input {
-  width: 100%;
-  padding: 14px 20px;
-  border: 1.5px solid rgba(255,141,183,.3);
-  border-radius: 50px;
-  background: rgba(255,255,255,.07);
-  color: white;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 1rem;
-  text-align: center;
-  outline: none;
-  transition: border-color var(--transition), box-shadow var(--transition);
-  margin-bottom: 14px;
-}
-
-.auth-card input::placeholder { color:rgba(255,255,255,.3); }
-.auth-card input:focus {
-  border-color: var(--rose);
-  box-shadow: 0 0 0 3px rgba(255,141,183,.2);
-}
-
-.auth-card button {
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(90deg, var(--rose), var(--violet));
-  color: white;
-  border: none;
-  border-radius: 50px;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: opacity var(--transition), transform var(--transition);
-}
-
-.auth-card button:hover  { opacity:.9; transform:translateY(-2px); }
-.auth-card button:active { transform:translateY(0); }
-
-.auth-erro {
-  margin-top: 14px;
-  color: #ff6b6b;
-  font-size: .88rem;
-  min-height: 20px;
-}
-
-.auth-erro.shake { animation: shake .35s ease; }
-
-@keyframes shake {
-  0%,100% { transform:translateX(0); }
-  25%      { transform:translateX(-7px); }
-  75%      { transform:translateX(7px); }
-}
+.auth-card button:hover{opacity:.9;transform:translateY(-2px);}
+.auth-card button:active{transform:translateY(0);}
+.auth-erro{margin-top:14px;color:#ff6b6b;font-size:.88rem;min-height:20px;}
+.auth-erro.shake{animation:shake .35s ease;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-7px);}75%{transform:translateX(7px);}}
 
 /* ================= HERO ================= */
-.hero {
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-  background: #000;
-  margin-bottom: 0;
+.hero{height:100vh;position:relative;overflow:hidden;background:#000;}
+
+/* Desktop: 3 vídeos lado a lado */
+.videos-grid{position:absolute;inset:0;display:flex;}
+.videos-grid video{flex:1;width:33.33%;height:100%;object-fit:cover;}
+
+.hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:1;}
+
+/* Textos laterais — desktop only */
+.texto-lateral{position:absolute;z-index:2;width:26%;color:white;}
+.esquerda{left:3%;top:50%;transform:translateY(-50%);}
+.direita{right:3%;top:50%;transform:translateY(-50%);}
+.bloco-romantico{margin-bottom:50px;opacity:0;transform:translateX(-20px);transition:opacity .8s ease,transform .8s ease;}
+.direita .bloco-romantico{transform:translateX(20px);}
+.bloco-romantico.visivel-texto{opacity:1;transform:translateX(0);}
+.bloco-romantico h3{
+  font-family:'Caveat',cursive;font-size:clamp(32px,2.5vw,58px);
+  font-weight:700;line-height:1.1;color:var(--rose);margin-bottom:14px;
+  text-shadow:0 0 12px rgba(255,141,183,.6);
 }
-
-.videos-grid { position:absolute; inset:0; display:flex; }
-
-.videos-grid video {
-  flex: 1;
-  width: 33.33%;
-  height: 100%;
-  object-fit: cover;
+.bloco-romantico p{
+  font-family:'Caveat',cursive;font-size:clamp(18px,1.5vw,32px);
+  font-weight:600;line-height:1.3;color:rgba(255,255,255,.9);
 }
+.decoracao{text-align:center;font-size:36px;color:var(--rose);margin:28px 0;opacity:.8;}
 
-.hero::after {
-  content:'';
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.45);
-  z-index:1;
+/* Hero content centro */
+.hero-content{
+  position:absolute;inset:0;z-index:3;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;color:white;padding:20px;
 }
-
-.hero-content {
-  position:absolute;
-  inset:0;
-  z-index:2;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  color:white;
-  padding:20px;
+.hero-content h1{
+  font-size:clamp(2.5rem,6vw,4rem);margin-bottom:15px;
+  text-shadow:0 0 25px rgba(0,0,0,.9);
+  animation:aparecer .9s ease .2s both;
 }
-
-.hero-content h1 {
-  font-size: clamp(2.5rem,6vw,4rem);
-  margin-bottom: 15px;
-  text-shadow: 0 0 25px rgba(0,0,0,.8);
-  animation: aparecer .9s ease .2s both;
+.hero-content p{
+  max-width:500px;font-size:clamp(.95rem,1.8vw,1.15rem);
+  text-shadow:0 0 15px rgba(0,0,0,.9);
+  animation:aparecer .9s ease .5s both;min-height:2em;
 }
-
-/* Efeito digitação no subtítulo */
-.hero-content p {
-  max-width: 600px;
-  font-size: clamp(1rem,2vw,1.2rem);
-  text-shadow: 0 0 10px rgba(0,0,0,.8);
-  animation: aparecer .9s ease .5s both;
-  min-height: 2em;
+#typing-cursor{
+  display:inline-block;width:2px;height:1em;background:white;
+  margin-left:2px;vertical-align:middle;animation:piscar .7s step-end infinite;
 }
-
-#typing-cursor {
-  display: inline-block;
-  width: 2px;
-  height: 1em;
-  background: white;
-  margin-left: 2px;
-  vertical-align: middle;
-  animation: piscar .7s step-end infinite;
-}
-
-@keyframes piscar {
-  0%,100% { opacity:1; }
-  50%      { opacity:0; }
-}
-
-@keyframes aparecer {
-  from { opacity:0; transform:translateY(20px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-
-
-
-/* ================= TEXTOS LATERAIS ================= */
-.texto-lateral { position:absolute; z-index:2; width:28%; color:white; }
-.esquerda { left:4%; top:50%; transform:translateY(-50%); }
-.direita  { right:4%; top:50%; transform:translateY(-50%); }
-
-.bloco-romantico { margin-bottom:60px; }
-
-.bloco-romantico h3 {
-  font-family:'Caveat',cursive;
-  font-size:clamp(42px,3vw,70px);
-  font-weight:700;
-  line-height:1;
-  color:var(--rose);
-  margin-bottom:20px;
-  text-shadow:0 0 12px rgba(255,141,183,.6),0 0 25px rgba(255,141,183,.3);
-}
-
-.bloco-romantico p {
-  font-family:'Caveat',cursive;
-  font-size:clamp(24px,1.8vw,42px);
-  font-weight:600;
-  line-height:1.2;
-  color:white;
-  text-shadow:0 0 10px rgba(255,255,255,.15);
-}
-
-.decoracao { text-align:center; font-size:40px; color:var(--rose); margin:35px 0; opacity:.9; }
+@keyframes piscar{0%,100%{opacity:1;}50%{opacity:0;}}
+@keyframes aparecer{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 
 /* ================= GALERIA ================= */
-section.galeria-section {
-  width:90%;
-  max-width:1400px;
-  margin:0 auto;
-  padding:80px 0 60px;
-  background: transparent;
-  position: relative;
-  z-index: 1;
+section.galeria-section{
+  width:90%;max-width:1400px;margin:0 auto;padding:80px 0 60px;
 }
-
-.titulo { text-align:center; margin-bottom:50px; }
-
-.titulo h2 {
-  font-size:clamp(2rem,5vw,3rem);
-  font-weight:700;
+.titulo{text-align:center;margin-bottom:50px;}
+.titulo h2{
+  font-size:clamp(2rem,5vw,3rem);font-weight:700;
   background:linear-gradient(90deg,var(--rose),var(--violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   margin-bottom:10px;
 }
-
-.titulo::after {
-  content:"✦ ✦ ✦";
-  display:block;
-  color:var(--rose);
-  letter-spacing:10px;
-  font-size:1.1rem;
-}
-
-.galeria {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:30px;
-}
-
-@media (max-width:900px) {
-  .galeria { grid-template-columns:1fr; }
-}
-
-.card {
-  background:var(--white);
-  border-radius:var(--radius-lg);
-  overflow:hidden;
-  cursor:pointer;
+.titulo::after{content:"✦ ✦ ✦";display:block;color:var(--rose);letter-spacing:10px;font-size:1.1rem;}
+.galeria{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
+.card{
+  background:var(--white);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;
   box-shadow:var(--card-shadow);
-  transition:transform var(--transition), box-shadow var(--transition);
-  opacity:0;
-  transform:translateY(30px);
+  opacity:0;transform:translateY(40px);
+  transition:opacity .7s ease,transform .7s ease,box-shadow var(--t);
 }
-
-.card.visivel { animation:entrar .5s ease forwards; }
-
-@keyframes entrar {
-  to { opacity:1; transform:translateY(0); }
-}
-
-.card:hover { transform:translateY(-10px); box-shadow:0 25px 50px rgba(217,107,160,.22); }
-
-.card-thumb { width:100%; height:350px; overflow:hidden; }
-.card-thumb img { width:100%; height:100%; object-fit:cover; transition:transform .4s ease; }
-.card:hover .card-thumb img { transform:scale(1.08); }
-
-.card-info { padding:20px; text-align:center; }
-.card-info h3 { color:var(--rose-deep); margin-bottom:8px; }
-.card-info p  { color:var(--muted); font-size:.92rem; }
-
-/* ================= SEÇÃO POEMA ================= */
-.poema-section {
-  width:90%;
-  max-width:780px;
-  margin:0 auto;
-  padding:80px 0 80px;
-}
-
-.poema-wrap {
-  background: linear-gradient(135deg,#1a0a14,#0d0015);
-  border-radius: 32px;
-  padding: 60px 50px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 30px 80px rgba(124,77,255,.25), 0 0 0 1px rgba(255,141,183,.1);
-}
-
-/* Brilho de fundo decorativo */
-.poema-wrap::before {
-  content:'';
-  position:absolute;
-  top:-80px; left:50%;
-  transform:translateX(-50%);
-  width:400px; height:400px;
-  background:radial-gradient(circle,rgba(255,141,183,.12) 0%,transparent 70%);
-  pointer-events:none;
-}
-
-.poema-titulo {
-  font-family:'Caveat',cursive;
-  font-size:clamp(1.8rem,4vw,2.8rem);
-  color:var(--rose);
-  margin-bottom:36px;
-  text-shadow:0 0 20px rgba(255,141,183,.4);
-}
-
-.poema-verso {
-  font-family:'Caveat',cursive;
-  font-size:clamp(1.15rem,2.5vw,1.55rem);
-  color:rgba(255,255,255,.88);
-  line-height:1.9;
-  white-space:pre-line;
-  margin-bottom:30px;
-}
-
-.poema-verso:last-of-type { margin-bottom:0; }
-
-.poema-divisor {
-  color: var(--rose);
-  font-size:1.2rem;
-  letter-spacing:12px;
-  margin:28px 0;
-  opacity:.6;
-}
+.card.visivel{opacity:1;transform:translateY(0);}
+.card:hover{transform:translateY(-10px);box-shadow:0 25px 50px rgba(217,107,160,.25);}
+.card-thumb{width:100%;height:350px;overflow:hidden;}
+.card-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+.card:hover .card-thumb img{transform:scale(1.06);}
+.card-info{padding:20px;text-align:center;}
+.card-info h3{color:var(--rose-deep);margin-bottom:8px;}
+.card-info p{color:var(--muted);font-size:.92rem;}
 
 /* ================= SEÇÃO SURPRESA ================= */
-.surpresa-section {
-  width:90%;
-  max-width:900px;
-  margin:0 auto;
-  padding:40px 0 100px;
+.surpresa-section{width:90%;max-width:900px;margin:0 auto;padding:20px 0 100px;}
+.surpresa-wrap{
+  background:linear-gradient(135deg,var(--rose-soft),#f3e8ff);
+  border-radius:32px;padding:60px 50px;text-align:center;
+  position:relative;overflow:hidden;
+  box-shadow:0 20px 60px rgba(217,107,160,.15);
 }
-
-.surpresa-wrap {
-  background: linear-gradient(135deg, var(--rose-soft), #f3e8ff);
-  border-radius: 32px;
-  padding: 60px 50px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(217,107,160,.15);
+.surpresa-wrap::after{
+  content:'💜';position:absolute;font-size:180px;
+  bottom:-30px;right:-20px;opacity:.06;pointer-events:none;line-height:1;
 }
-
-.surpresa-wrap::after {
-  content:'💜';
-  position:absolute;
-  font-size:180px;
-  bottom:-30px; right:-20px;
-  opacity:.06;
-  pointer-events:none;
-  line-height:1;
+.surpresa-label{
+  display:inline-block;background:linear-gradient(90deg,var(--rose),var(--violet));
+  color:white;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  padding:5px 16px;border-radius:99px;margin-bottom:24px;
 }
-
-.surpresa-label {
-  display:inline-block;
+.surpresa-wrap h2{
+  font-family:'Caveat',cursive;font-size:clamp(2rem,5vw,3.2rem);
+  color:#2a0030;margin-bottom:20px;line-height:1.15;
+}
+.surpresa-wrap > p{
+  color:#5a3060;font-size:clamp(1rem,2vw,1.15rem);
+  line-height:1.85;max-width:620px;margin:0 auto 32px;
+}
+.surpresa-contador-grande{display:inline-flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-bottom:36px;}
+.sc-item{background:white;border-radius:20px;padding:18px 28px;box-shadow:0 8px 24px rgba(217,107,160,.18);min-width:90px;}
+.sc-num{
+  font-family:'Caveat',cursive;font-size:3rem;line-height:1;
   background:linear-gradient(90deg,var(--rose),var(--violet));
-  color:white;
-  font-size:.75rem;
-  font-weight:700;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  padding:5px 16px;
-  border-radius:99px;
-  margin-bottom:24px;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;
 }
+.sc-label{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;}
+.surpresa-assinatura{font-family:'Caveat',cursive;font-size:1.5rem;color:var(--rose-deep);}
 
-.surpresa-wrap h2 {
-  font-family:'Caveat',cursive;
-  font-size:clamp(2rem,5vw,3.2rem);
-  color:#2a0030;
-  margin-bottom:20px;
-  line-height:1.15;
-}
-
-.surpresa-wrap p {
-  color:#5a3060;
-  font-size:clamp(1rem,2vw,1.15rem);
-  line-height:1.85;
-  max-width:620px;
-  margin:0 auto 32px;
-}
-
-.surpresa-contador-grande {
-  display:inline-flex;
-  gap:20px;
-  flex-wrap:wrap;
-  justify-content:center;
-  margin-bottom:36px;
-}
-
-.sc-item {
-  background:white;
-  border-radius:20px;
-  padding:18px 28px;
-  box-shadow:0 8px 24px rgba(217,107,160,.18);
-  min-width:90px;
-}
-
-.sc-num {
-  font-family:'Caveat',cursive;
-  font-size:3rem;
-  line-height:1;
-  background:linear-gradient(90deg,var(--rose),var(--violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  display:block;
-}
-
-.sc-label {
-  font-size:.72rem;
-  color:var(--muted);
-  text-transform:uppercase;
-  letter-spacing:.1em;
-}
-
-.surpresa-assinatura {
-  font-family:'Caveat',cursive;
-  font-size:1.5rem;
-  color:var(--rose-deep);
-}
-
-/* ================= MODAL ================= */
-.modal {
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.85);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:999;
-  padding:20px;
+/* ================= MODAL MEMÓRIAS ================= */
+.modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;
+  justify-content:center;align-items:center;z-index:999;padding:20px;
   backdrop-filter:blur(4px);
 }
-
-.modal.aberto { display:flex; }
-
-.modal-content {
-  width:90%;
-  max-width:1100px;
-  min-height:580px;
-  display:flex;
-  background:var(--white);
-  border-radius:var(--radius-lg);
-  overflow:hidden;
+.modal.aberto{display:flex;}
+.modal-content{
+  width:90%;max-width:1100px;min-height:580px;display:flex;
+  background:var(--white);border-radius:var(--radius-lg);overflow:hidden;
   animation:zoomIn .35s cubic-bezier(.34,1.56,.64,1) both;
 }
-
-@keyframes zoomIn {
-  from { opacity:0; transform:scale(.9); }
-  to   { opacity:1; transform:scale(1); }
+@keyframes zoomIn{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:scale(1);}}
+.modal-img-wrap{width:42%;background:#111;display:flex;align-items:center;justify-content:center;padding:24px;flex-shrink:0;}
+.modal-img{width:100%;max-height:520px;object-fit:contain;border-radius:var(--radius-md);box-shadow:0 10px 30px rgba(0,0,0,.4);transition:opacity .25s ease;}
+.modal-img.trocando{opacity:0;}
+.modal-body{flex:1;padding:40px;overflow-y:auto;display:flex;flex-direction:column;}
+.modal-body h2{color:var(--rose-deep);margin-bottom:15px;font-size:1.6rem;}
+.modal-body p{line-height:1.85;flex:1;white-space:pre-line;color:var(--ink);}
+.modal-fotos-contador{text-align:center;font-size:.82rem;color:var(--muted);margin-top:10px;}
+.controles{display:flex;justify-content:center;gap:12px;margin-top:25px;flex-wrap:wrap;}
+.controles button{
+  border:none;background:linear-gradient(90deg,var(--rose),#ff6ea4);color:white;
+  padding:11px 22px;border-radius:50px;cursor:pointer;font-family:'Quicksand',sans-serif;
+  font-weight:600;font-size:.95rem;transition:opacity var(--t),transform var(--t);
 }
-
-.modal-img-wrap {
-  width:42%;
-  background:#111;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:24px;
-  flex-shrink:0;
+.controles button:hover{opacity:.88;transform:translateY(-2px);}
+.fechar{
+  position:absolute;top:18px;right:26px;font-size:42px;color:white;cursor:pointer;
+  line-height:1;transition:transform var(--t),color var(--t);z-index:1000;
 }
-
-.modal-img {
-  width:100%;
-  max-height:520px;
-  object-fit:contain;
-  border-radius:var(--radius-md);
-  box-shadow:0 10px 30px rgba(0,0,0,.4);
-  transition:opacity .25s ease;
-}
-
-.modal-img.trocando { opacity:0; }
-
-.modal-body {
-  flex:1;
-  padding:40px;
-  overflow-y:auto;
-  display:flex;
-  flex-direction:column;
-}
-
-.modal-body h2 { color:var(--rose-deep); margin-bottom:15px; font-size:1.6rem; }
-.modal-body p  { line-height:1.85; flex:1; white-space:pre-line; color:var(--ink); }
-
-.modal-fotos-contador { text-align:center; font-size:.82rem; color:var(--muted); margin-top:10px; }
-
-.controles {
-  display:flex;
-  justify-content:center;
-  gap:12px;
-  margin-top:25px;
-  flex-wrap:wrap;
-}
-
-.controles button {
-  border:none;
-  background:linear-gradient(90deg,var(--rose),#ff6ea4);
-  color:white;
-  padding:11px 22px;
-  border-radius:50px;
-  cursor:pointer;
-  font-family:'Quicksand',sans-serif;
-  font-weight:600;
-  font-size:.95rem;
-  transition:opacity var(--transition),transform var(--transition);
-}
-
-.controles button:hover  { opacity:.88; transform:translateY(-2px); }
-.controles button:active { transform:translateY(0); }
-
-.fechar {
-  position:absolute;
-  top:18px; right:26px;
-  font-size:42px;
-  color:white;
-  cursor:pointer;
-  line-height:1;
-  transition:transform var(--transition),color var(--transition);
-  z-index:1000;
-}
-
-.fechar:hover { transform:rotate(90deg); color:var(--rose); }
-
-/* ================= FOOTER ================= */
-footer {
-  text-align:center;
-  padding:60px 20px;
-  color:var(--muted);
-}
-
-footer h3 { color:var(--rose-deep); margin-bottom:10px; font-size:1.4rem; }
-
-/* ================= HELPERS ================= */
-.reveal {
-  opacity:0;
-  transform:translateY(28px);
-  transition:opacity .6s ease,transform .6s ease;
-}
-
-.reveal.visivel { opacity:1; transform:translateY(0); }
-
-/* ================= RESPONSIVO ================= */
-@media (max-width:768px) {
-  .hero {
-    height: 100svh;
-    min-height: 580px;
-  }
-
-  /* Hero mobile: mostra só o primeiro vídeo em tela cheia */
-  .videos-grid {
-    flex-direction: column;
-    position: absolute;
-    inset: 0;
-  }
-
-  .videos-grid video {
-    width: 100%;
-    height: 100%;
-    flex: none;
-    position: absolute;
-    inset: 0;
-    object-fit: cover;
-  }
-
-  /* Esconde o segundo e terceiro vídeo no mobile */
-  .videos-grid video:nth-child(2),
-  .videos-grid video:nth-child(3) {
-    display: none;
-  }
-
-  .texto-lateral { display: none; }
-
-  .hero-content {
-    position:absolute; inset:0;
-    display:flex; justify-content:center; align-items:center; flex-direction:column;
-    z-index:4; padding:5%; text-align:center;
-  }
-
-  .galeria-section { width:100%; padding:60px 20px 40px; }
-  .card-thumb { height:260px; }
-
-  .poema-wrap   { padding:40px 24px; border-radius:24px; }
-  .surpresa-wrap{ padding:40px 24px; border-radius:24px; }
-
-  .surpresa-contador-grande { gap:12px; }
-  .sc-item { padding:14px 18px; }
-  .sc-num  { font-size:2.4rem; }
-
-  .modal-content { flex-direction:column; width:95%; max-height:90vh; overflow-y:auto; }
-  .modal-img-wrap { width:100%; padding:0; max-height:38vh; }
-  .modal-img { width:100%; max-height:38vh; object-fit:cover; border-radius:0; }
-  .modal-body { padding:22px 18px; }
-  .modal-body h2 { font-size:clamp(1.4rem,5.5vw,1.8rem); }
-  .modal-body p  { font-size:clamp(.9rem,3.5vw,1rem); }
-  .fechar { font-size:36px; top:10px; right:14px; }
-
-  .auth-card { padding:36px 24px; }
-
-  .poema-section  { padding:40px 0 40px; }
-  .surpresa-section { padding:20px 0 60px; }
-  .poema-wrap     { padding:36px 20px; border-radius:20px; }
-  .surpresa-wrap  { padding:36px 20px; border-radius:20px; }
-  .surpresa-contador-grande { gap:10px; }
-  .sc-item   { padding:12px 14px; min-width:72px; }
-  .sc-num    { font-size:2.2rem; }
-  .sc-label  { font-size:.65rem; }
-}
+.fechar:hover{transform:rotate(90deg);color:var(--rose);}
 
 /* ================= NOTIFICAÇÃO POEMA ================= */
-#poema-notif {
-  position: fixed;
-  bottom: 28px;
-  right: 24px;
-  z-index: 8000;
-  background: linear-gradient(135deg,#1a0a14,#0d0015);
-  border: 1px solid rgba(255,141,183,.35);
-  border-radius: 20px;
-  padding: 16px 20px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  cursor: pointer;
-  box-shadow: 0 8px 32px rgba(124,77,255,.35), 0 0 0 1px rgba(255,141,183,.1);
-  max-width: 280px;
-  transform: translateY(120px);
-  opacity: 0;
-  transition: transform .5s cubic-bezier(.34,1.56,.64,1), opacity .4s ease;
-  user-select: none;
+#poema-notif{
+  position:fixed;bottom:28px;right:24px;z-index:8000;
+  background:linear-gradient(135deg,#1a0a14,#0d0015);
+  border:1px solid rgba(255,141,183,.35);border-radius:20px;
+  padding:16px 36px 16px 20px;
+  display:flex;align-items:center;gap:14px;cursor:pointer;
+  box-shadow:0 8px 32px rgba(124,77,255,.35);
+  max-width:290px;
+  transform:translateY(140px);opacity:0;
+  transition:transform .7s cubic-bezier(.34,1.4,.64,1),opacity .6s ease;
+  user-select:none;
 }
-
-#poema-notif.visivel {
-  transform: translateY(0);
-  opacity: 1;
+#poema-notif.visivel{transform:translateY(0);opacity:1;}
+#poema-notif.saindo{transform:translateY(140px);opacity:0;transition:transform .5s ease,opacity .4s ease;}
+.notif-icon{
+  font-size:2rem;flex-shrink:0;
+  /* animação lenta e fluida */
+  animation:float 3s ease-in-out infinite;
 }
-
-#poema-notif.saindo {
-  transform: translateY(120px);
-  opacity: 0;
+@keyframes float{
+  0%,100%{transform:translateY(0) scale(1);}
+  50%{transform:translateY(-5px) scale(1.08);}
 }
-
-.notif-icon {
-  font-size: 2rem;
-  flex-shrink: 0;
-  animation: batimento .9s ease infinite;
+.notif-texto strong{display:block;color:var(--rose);font-size:.88rem;margin-bottom:3px;}
+.notif-texto span{color:rgba(255,255,255,.6);font-size:.78rem;line-height:1.35;}
+.notif-fechar{
+  position:absolute;top:8px;right:10px;font-size:.95rem;
+  color:rgba(255,255,255,.3);line-height:1;cursor:pointer;transition:color .2s;
 }
-
-.notif-texto strong {
-  display: block;
-  color: var(--rose);
-  font-size: .88rem;
-  margin-bottom: 2px;
-}
-
-.notif-texto span {
-  color: rgba(255,255,255,.6);
-  font-size: .78rem;
-  line-height: 1.3;
-}
-
-.notif-fechar {
-  position: absolute;
-  top: 8px; right: 12px;
-  font-size: 1rem;
-  color: rgba(255,255,255,.3);
-  line-height: 1;
-  cursor: pointer;
-  transition: color .2s;
-}
-.notif-fechar:hover { color: var(--rose); }
+.notif-fechar:hover{color:var(--rose);}
 
 /* ================= MODAL POEMA ================= */
-#poema-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 8500;
-  background: rgba(0,0,0,.92);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  padding: 24px;
-  backdrop-filter: blur(6px);
+#poema-modal{
+  position:fixed;inset:0;z-index:8500;background:rgba(0,0,0,.92);
+  display:none;justify-content:center;align-items:center;
+  padding:24px;backdrop-filter:blur(6px);
 }
-
-#poema-modal.aberto { display: flex; }
-
-.poema-modal-content {
-  background: linear-gradient(135deg,#1a0a14,#0d0015);
-  border: 1px solid rgba(255,141,183,.2);
-  border-radius: 32px;
-  padding: 60px 50px;
-  width: 100%;
-  max-width: 680px;
-  max-height: 90vh;
-  overflow-y: auto;
-  text-align: center;
-  position: relative;
-  animation: zoomIn .4s cubic-bezier(.34,1.56,.64,1) both;
-  box-shadow: 0 40px 100px rgba(124,77,255,.3);
+#poema-modal.aberto{display:flex;}
+.poema-modal-content{
+  background:linear-gradient(135deg,#1a0a14,#0d0015);
+  border:1px solid rgba(255,141,183,.2);border-radius:32px;
+  padding:60px 50px;width:100%;max-width:680px;max-height:90vh;
+  overflow-y:auto;text-align:center;position:relative;
+  animation:zoomIn .4s cubic-bezier(.34,1.56,.64,1) both;
+  box-shadow:0 40px 100px rgba(124,77,255,.3);
 }
-
-/* brilho no topo */
-.poema-modal-content::before {
-  content:'';
-  position:absolute;
-  top:-100px; left:50%; transform:translateX(-50%);
-  width:500px; height:500px;
+.poema-modal-content::before{
+  content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);
+  width:500px;height:500px;
   background:radial-gradient(circle,rgba(255,141,183,.1) 0%,transparent 65%);
   pointer-events:none;
 }
-
-.poema-modal-fechar {
-  position: absolute;
-  top: 18px; right: 22px;
-  font-size: 2rem;
-  color: rgba(255,255,255,.3);
-  cursor: pointer;
-  transition: color .2s, transform .2s;
-  line-height: 1;
+.poema-modal-fechar{
+  position:absolute;top:18px;right:22px;font-size:2rem;
+  color:rgba(255,255,255,.3);cursor:pointer;transition:color .2s,transform .25s;line-height:1;
 }
-.poema-modal-fechar:hover { color: var(--rose); transform: rotate(90deg); }
+.poema-modal-fechar:hover{color:var(--rose);transform:rotate(90deg);}
+.poema-titulo{
+  font-family:'Caveat',cursive;font-size:clamp(1.8rem,4vw,2.8rem);
+  color:var(--rose);margin-bottom:36px;text-shadow:0 0 20px rgba(255,141,183,.4);
+}
+.poema-verso{
+  font-family:'Caveat',cursive;font-size:clamp(1.2rem,2.5vw,1.6rem);
+  color:rgba(255,255,255,.9);line-height:2;white-space:pre-line;margin-bottom:30px;
+}
+.poema-verso:last-of-type{margin-bottom:0;}
+.poema-divisor{color:var(--rose);font-size:1.1rem;letter-spacing:12px;margin:24px 0;opacity:.5;}
 
-@media (max-width: 768px) {
-  #poema-notif { bottom:18px; right:14px; max-width:240px; padding:13px 16px; }
-  .poema-modal-content { padding:44px 22px; border-radius:22px; }
+/* ================= FOOTER ================= */
+footer{text-align:center;padding:60px 20px;color:var(--muted);}
+footer h3{color:var(--rose-deep);margin-bottom:10px;font-size:1.4rem;}
+
+/* ================= REVEAL ================= */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visivel{opacity:1;transform:translateY(0);}
+
+/* ================= RESPONSIVO ================= */
+@media(max-width:900px){
+  .galeria{grid-template-columns:1fr;}
+}
+
+@media(max-width:768px){
+  /* Hero: tela cheia com 1 vídeo */
+  .hero{height:100svh;min-height:580px;}
+
+  .videos-grid{position:absolute;inset:0;display:block;}
+  .videos-grid video{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;flex:none;
+  }
+  .videos-grid video:nth-child(2),
+  .videos-grid video:nth-child(3){display:none;}
+
+  /* Esconde textos laterais — no mobile o centro já fala */
+  .texto-lateral{display:none;}
+
+  /* Hero content mais legível */
+  .hero-content{z-index:3;padding:24px;}
+  .hero-content h1{font-size:clamp(2rem,8vw,3rem);}
+  .hero-content p{font-size:clamp(.9rem,3.8vw,1.1rem);max-width:90%;}
+
+  /* Galeria */
+  .galeria-section{width:100%;padding:50px 16px 40px;}
+  .card-thumb{height:240px;}
+
+  /* Surpresa */
+  .surpresa-section{width:100%;padding:10px 16px 60px;}
+  .surpresa-wrap{padding:36px 20px;border-radius:22px;}
+  .surpresa-contador-grande{gap:10px;}
+  .sc-item{padding:12px 14px;min-width:68px;}
+  .sc-num{font-size:2rem;}
+  .sc-label{font-size:.62rem;}
+
+  /* Modal memórias */
+  .modal-content{flex-direction:column;width:96%;max-height:92vh;overflow-y:auto;min-height:unset;}
+  .modal-img-wrap{width:100%;padding:0;height:38vmax;max-height:280px;}
+  .modal-img{width:100%;height:100%;object-fit:cover;border-radius:0;max-height:unset;}
+  .modal-body{width:100%;padding:20px 16px;}
+  .modal-body h2{font-size:clamp(1.3rem,5vw,1.7rem);}
+  .modal-body p{font-size:clamp(.88rem,3.4vw,1rem);}
+  .fechar{font-size:36px;top:10px;right:14px;}
+
+  /* Auth */
+  .auth-card{padding:36px 22px;}
+
+  /* Notif */
+  #poema-notif{bottom:16px;right:12px;max-width:250px;padding:13px 32px 13px 14px;}
+
+  /* Modal poema */
+  .poema-modal-content{padding:44px 20px;border-radius:22px;}
+  .poema-verso{font-size:clamp(1.1rem,4vw,1.4rem);}
 }
 </style>
 </head>
 <body>
 
-<!-- ================= LOADING ================= -->
+<!-- LOADING -->
 <div id="loading-screen">
   <span class="loading-heart">💜</span>
-  <div class="loading-bar-wrap">
-    <div class="loading-bar" id="loading-bar"></div>
-  </div>
+  <div class="loading-bar-wrap"><div class="loading-bar" id="loading-bar"></div></div>
   <p class="loading-texto" id="loading-texto">carregando...</p>
 </div>
 
-<!-- ================= AUTH ================= -->
+<!-- AUTH -->
 <div id="auth-overlay" style="display:none;">
   <canvas id="particles-canvas"></canvas>
   <div class="auth-card">
@@ -873,9 +379,11 @@ footer h3 { color:var(--rose-deep); margin-bottom:10px; font-size:1.4rem; }
   </div>
 </div>
 
-<!-- ================= HERO ================= -->
+<!-- HERO -->
 <div class="hero">
   <div class="videos-grid">
+
+    <!-- Textos laterais DENTRO do grid para ficarem sobre os vídeos -->
     <div class="texto-lateral esquerda">
       <div class="bloco-romantico">
         <h3>Nosso começo<br>foi inesperado.</h3>
@@ -913,43 +421,32 @@ footer h3 { color:var(--rose-deep); margin-bottom:10px; font-size:1.4rem; }
 
   <div class="hero-content">
     <h1>Nossa História 💜</h1>
-    <p id="typing-p"><span id="typing-text"></span><span id="typing-cursor"></span></p>
+    <p><span id="typing-text"></span><span id="typing-cursor"></span></p>
   </div>
-
 </div>
 
-<!-- ================= GALERIA ================= -->
+<!-- GALERIA -->
 <section class="galeria-section">
   <div class="titulo reveal">
     <h2>Momentos Especiais</h2>
   </div>
-
   <div class="galeria">
     <div class="card" onclick="abrir(0)">
-      <div class="card-thumb"><img src="imagens/primeira/1.jpeg" alt="Primeira Impressão"></div>
-      <div class="card-info">
-        <h3>Primeira Impressão</h3>
-        <p>Clique para relembrar esse momento.</p>
-      </div>
+      <div class="card-thumb"><img src="imagens/primeira/1.jpeg" alt="Primeira Impressão" loading="lazy"></div>
+      <div class="card-info"><h3>Primeira Impressão</h3><p>Clique para relembrar esse momento.</p></div>
     </div>
     <div class="card" onclick="abrir(1)">
-      <div class="card-thumb"><img src="imagens/sonho/1.jpeg" alt="Início de um Sonho"></div>
-      <div class="card-info">
-        <h3>Início de um Sonho</h3>
-        <p>Clique para relembrar esse momento.</p>
-      </div>
+      <div class="card-thumb"><img src="imagens/sonho/1.jpeg" alt="Início de um Sonho" loading="lazy"></div>
+      <div class="card-info"><h3>Início de um Sonho</h3><p>Clique para relembrar esse momento.</p></div>
     </div>
     <div class="card" onclick="abrir(2)">
-      <div class="card-thumb"><img src="imagens/destino/1.jpeg" alt="Destino?"></div>
-      <div class="card-info">
-        <h3>Destino?</h3>
-        <p>Clique para relembrar esse momento.</p>
-      </div>
+      <div class="card-thumb"><img src="imagens/destino/1.jpeg" alt="Destino?" loading="lazy"></div>
+      <div class="card-info"><h3>Destino?</h3><p>Clique para relembrar esse momento.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ================= NOTIFICAÇÃO POEMA ================= -->
+<!-- NOTIFICAÇÃO POEMA -->
 <div id="poema-notif" onclick="abrirPoema()">
   <span class="notif-fechar" onclick="event.stopPropagation();fecharNotif()">✕</span>
   <span class="notif-icon">💌</span>
@@ -959,85 +456,57 @@ footer h3 { color:var(--rose-deep); margin-bottom:10px; font-size:1.4rem; }
   </div>
 </div>
 
-<!-- ================= MODAL POEMA ================= -->
+<!-- MODAL POEMA -->
 <div id="poema-modal">
   <div class="poema-modal-content">
     <span class="poema-modal-fechar" onclick="fecharPoema()">✕</span>
     <h2 class="poema-titulo">✦ Para Você ✦</h2>
 
-    <p class="poema-verso">
-Você me reflete o amarelo;
+    <p class="poema-verso">Você me reflete o amarelo;
 Alegre, disposta e radiante;
 Sempre em lugares distantes;
-A princesa de um castelo.
-</p>
+A princesa de um castelo.</p>
 
     <div class="poema-divisor">✦ ✦ ✦</div>
 
-    <p class="poema-verso">
-Mas isso traz um problema;
+    <p class="poema-verso">Mas isso traz um problema;
 Mesmo amarelo, vc flerta com vermelho;
 Ama todos sem ver espelho;
-Isso é ser deusa suprema.
-</p>
+Isso é ser deusa suprema.</p>
 
     <div class="poema-divisor">✦ ✦ ✦</div>
 
-    <p class="poema-verso">
-E agora me complica;
+    <p class="poema-verso">E agora me complica;
 Vi um pedaço de tinta;
 O rosa se eterniza;
-E o roxo me hipnotiza.
-</p>
+E o roxo me hipnotiza.</p>
 
     <div class="poema-divisor">✦ ✦ ✦</div>
 
-    <p class="poema-verso">
-Uma mistura de cores;
+    <p class="poema-verso">Uma mistura de cores;
 Muitos sabores;
 Amo desfrutar dessa mistura;
-Estou louco para continuar essa aventura.
-</p>
-
+Estou louco para continuar essa aventura.</p>
   </div>
 </div>
 
-<!-- ================= SURPRESA ================= -->
+<!-- SURPRESA -->
 <section class="surpresa-section">
   <div class="surpresa-wrap reveal">
     <span class="surpresa-label">✨ só pra você</span>
     <h2>Cada segundo ao seu lado<br>conta pra sempre.</h2>
-    <p>
-      Desde o dia em que você topou embarcar nessa loucura comigo,
-      cada minuto virou parte da melhor história que eu já vivi.
-      Obrigado por existir, por responder aquela mensagem maluca,
-      e por ser exatamente quem você é.
-    </p>
-
+    <p>Desde o dia em que você topou embarcar nessa loucura comigo, cada minuto virou parte da melhor história que eu já vivi. Obrigado por existir, por responder aquela mensagem maluca, e por ser exatamente quem você é.</p>
     <div class="surpresa-contador-grande">
-      <div class="sc-item">
-        <span class="sc-num" id="sc-dias">0</span>
-        <span class="sc-label">dias</span>
-      </div>
-      <div class="sc-item">
-        <span class="sc-num" id="sc-horas">0</span>
-        <span class="sc-label">horas</span>
-      </div>
-      <div class="sc-item">
-        <span class="sc-num" id="sc-min">0</span>
-        <span class="sc-label">minutos</span>
-      </div>
-      <div class="sc-item">
-        <span class="sc-num" id="sc-seg">0</span>
-        <span class="sc-label">segundos</span>
-      </div>
+      <div class="sc-item"><span class="sc-num" id="sc-dias">0</span><span class="sc-label">dias</span></div>
+      <div class="sc-item"><span class="sc-num" id="sc-horas">0</span><span class="sc-label">horas</span></div>
+      <div class="sc-item"><span class="sc-num" id="sc-min">0</span><span class="sc-label">minutos</span></div>
+      <div class="sc-item"><span class="sc-num" id="sc-seg">0</span><span class="sc-label">segundos</span></div>
     </div>
-
     <p class="surpresa-assinatura">… e contando. 💜</p>
   </div>
 </section>
 
-<!-- ================= MODAL ================= -->
+<!-- MODAL MEMÓRIAS -->
 <div class="modal" id="modal">
   <span class="fechar" onclick="fechar()" aria-label="Fechar">&times;</span>
   <div class="modal-content">
@@ -1066,13 +535,11 @@ Estou louco para continuar essa aventura.
 </footer>
 
 <script>
-/* ============================================================
-   DADOS
-   ============================================================ */
+/* ── DADOS ── */
 const memorias = [
   {
-    titulo: "Primeira Impressão",
-    texto: `É meio estranho dizer que talvez nem parece que ficamos apreensivos a primeira vez que conversamos.
+    titulo:"Primeira Impressão",
+    texto:`É meio estranho dizer que talvez nem parece que ficamos apreensivos a primeira vez que conversamos.
 
 Um estranho mandando mensagem para falar de desenho kkkkk.
 
@@ -1083,11 +550,11 @@ Nem dá para imaginar que uma MODELO me daria atenção.
 Meus amigos e minha família tinham certeza absoluta que era golpe.
 
 E mesmo assim lá estávamos nós, conversando todos os dias como se fôssemos dois malucos que não ligavam para o que diziam ao redor.`,
-    fotos: ["imagens/primeira/1.jpeg","imagens/primeira/2.jpeg","imagens/primeira/3.jpeg"]
+    fotos:["imagens/primeira/1.jpeg","imagens/primeira/2.jpeg","imagens/primeira/3.jpeg"]
   },
   {
-    titulo: "Início de um Sonho",
-    texto: `Quem diria que tudo começaria por causa de uma aposta?
+    titulo:"Início de um Sonho",
+    texto:`Quem diria que tudo começaria por causa de uma aposta?
 
 Dois cabeças-duras que não sabem quando desistir.
 
@@ -1098,11 +565,11 @@ Se você não fosse tão maluca quanto eu, acho que nada disso teria dado tão c
 Porque sinceramente... quem em sã consciência viaja para conhecer alguém que nunca viu pessoalmente?
 
 E mesmo assim os dois malucos foram se encontrar.`,
-    fotos: ["imagens/sonho/1.jpeg","imagens/sonho/2.jpeg","imagens/sonho/3.jpeg"]
+    fotos:["imagens/sonho/1.jpeg","imagens/sonho/2.jpeg","imagens/sonho/3.jpeg"]
   },
   {
-    titulo: "Destino?",
-    texto: `Cara, acho que nunca dei um rolê tão relaxante e libertador quanto esse nosso date. Fomos e fizemos tudo o que estava planejado e, se duvidar, até mais.
+    titulo:"Destino?",
+    texto:`Cara, acho que nunca dei um rolê tão relaxante e libertador quanto esse nosso date. Fomos e fizemos tudo o que estava planejado e, se duvidar, até mais.
 
 Fomos enganados por um pão de forma na feira, visitamos o Japão no Brasil, dividimos pokes e a nossa sorte, vimos vários Magikarps para o jantar, fomos tirar cartinhas Pokémon e descobri que você não gosta do maior farmador de aura de One Piece.
 
@@ -1111,300 +578,174 @@ Teve também aquele restaurante em que você estava morrendo de vergonha de entr
 A parte mais triste foi ter que me despedir para ir embora.
 
 Um único dia tão incrível que me marcou muito.`,
-    fotos: ["imagens/destino/1.jpeg","imagens/destino/2.jpeg","imagens/destino/3.jpeg"]
+    fotos:["imagens/destino/1.jpeg","imagens/destino/2.jpeg","imagens/destino/3.jpeg"]
   }
 ];
 
-/* ============================================================
-   LOADING SCREEN
-   ============================================================ */
-const frases = ["preparando tudo com amor…","juntando as memórias…","quase lá…","pronto! 💜"];
-const loadingBar   = document.getElementById("loading-bar");
-const loadingTexto = document.getElementById("loading-texto");
-
-let prog = 0;
-let fraseIdx = 0;
-
-const loadingInterval = setInterval(() => {
-  prog += Math.random() * 18 + 6;
-  if (prog >= 100) prog = 100;
-  loadingBar.style.width = prog + "%";
-
-  fraseIdx = Math.min(Math.floor(prog / 25), frases.length - 1);
-  loadingTexto.textContent = frases[fraseIdx];
-
-  if (prog >= 100) {
+/* ── LOADING ── */
+const frases=["preparando tudo com amor…","juntando as memórias…","quase lá…","pronto! 💜"];
+const loadingBar=document.getElementById("loading-bar");
+const loadingTexto=document.getElementById("loading-texto");
+let prog=0,fraseIdx=0;
+const loadingInterval=setInterval(()=>{
+  prog+=Math.random()*18+6;
+  if(prog>=100)prog=100;
+  loadingBar.style.width=prog+"%";
+  fraseIdx=Math.min(Math.floor(prog/25),frases.length-1);
+  loadingTexto.textContent=frases[fraseIdx];
+  if(prog>=100){
     clearInterval(loadingInterval);
-    setTimeout(() => {
+    setTimeout(()=>{
       document.getElementById("loading-screen").classList.add("saindo");
-      setTimeout(() => {
-        document.getElementById("loading-screen").style.display = "none";
-        document.getElementById("auth-overlay").style.display  = "flex";
+      setTimeout(()=>{
+        document.getElementById("loading-screen").style.display="none";
+        document.getElementById("auth-overlay").style.display="flex";
         iniciarParticulas();
         document.getElementById("auth-input").focus();
-      }, 800);
-    }, 400);
+      },800);
+    },400);
   }
-}, 120);
+},120);
 
-/* ============================================================
-   PARTÍCULAS (canvas no auth)
-   ============================================================ */
-function iniciarParticulas() {
-  const canvas = document.getElementById("particles-canvas");
-  const ctx    = canvas.getContext("2d");
-  canvas.width  = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  window.addEventListener("resize", () => {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-  });
-
-  const particulas = Array.from({ length: 60 }, () => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: Math.random() * 2 + .5,
-    vx: (Math.random() - .5) * .4,
-    vy: -(Math.random() * .6 + .2),
-    alpha: Math.random() * .6 + .2,
-    cor: Math.random() > .5 ? "#ff8db7" : "#7c4dff"
+/* ── PARTÍCULAS ── */
+function iniciarParticulas(){
+  const canvas=document.getElementById("particles-canvas");
+  const ctx=canvas.getContext("2d");
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  window.addEventListener("resize",()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+  const pts=Array.from({length:60},()=>({
+    x:Math.random()*canvas.width,y:Math.random()*canvas.height,
+    r:Math.random()*2+.5,vx:(Math.random()-.5)*.4,vy:-(Math.random()*.6+.2),
+    alpha:Math.random()*.6+.2,cor:Math.random()>.5?"#ff8db7":"#7c4dff"
   }));
-
-  function animar() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particulas.forEach(p => {
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = p.cor;
-      ctx.globalAlpha = p.alpha;
-      ctx.fill();
-
-      p.x += p.vx;
-      p.y += p.vy;
-      if (p.y < -10) { p.y = canvas.height + 10; p.x = Math.random() * canvas.width; }
-      if (p.x < -10) p.x = canvas.width + 10;
-      if (p.x > canvas.width + 10) p.x = -10;
+  function animar(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pts.forEach(p=>{
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.cor;ctx.globalAlpha=p.alpha;ctx.fill();
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.y<-10){p.y=canvas.height+10;p.x=Math.random()*canvas.width;}
+      if(p.x<-10)p.x=canvas.width+10;
+      if(p.x>canvas.width+10)p.x=-10;
     });
-    ctx.globalAlpha = 1;
-    requestAnimationFrame(animar);
+    ctx.globalAlpha=1;requestAnimationFrame(animar);
   }
   animar();
 }
 
-/* ============================================================
-   AUTH
-   ============================================================ */
-const respostasValidas = ["monkey day","monkey"];
-
-function normalizar(str) {
-  return str.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-}
-
-function verificarSenha() {
-  const input = document.getElementById("auth-input");
-  const erro  = document.getElementById("auth-erro");
-  const valor = normalizar(input.value);
-
-  if (respostasValidas.some(r => valor.includes(normalizar(r)))) {
+/* ── AUTH ── */
+function normalizar(s){return s.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
+function verificarSenha(){
+  const input=document.getElementById("auth-input");
+  const erro=document.getElementById("auth-erro");
+  const val=normalizar(input.value);
+  if(["monkey day","monkey"].some(r=>val.includes(normalizar(r)))){
     document.getElementById("auth-overlay").classList.add("saindo");
-    setTimeout(() => document.getElementById("auth-overlay").style.display = "none", 700);
+    setTimeout(()=>document.getElementById("auth-overlay").style.display="none",700);
     iniciarTyping();
+    animarTextosLaterais();
     agendarPoemaNotif();
-    document.addEventListener("click", () => musica.play(), { once:true });
+    document.addEventListener("click",()=>musica.play(),{once:true});
   } else {
-    erro.textContent = "Hmm… tenta lembrar melhor. 💜";
+    erro.textContent="Hmm… tenta lembrar melhor. 💜";
     erro.classList.remove("shake");
-    requestAnimationFrame(() => erro.classList.add("shake"));
+    requestAnimationFrame(()=>erro.classList.add("shake"));
     input.focus();
   }
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("auth-input").addEventListener("keydown", e => {
-    if (e.key === "Enter") verificarSenha();
-  });
+document.addEventListener("DOMContentLoaded",()=>{
+  document.getElementById("auth-input").addEventListener("keydown",e=>{if(e.key==="Enter")verificarSenha();});
 });
 
-/* ============================================================
-   EFEITO DE DIGITAÇÃO
-   ============================================================ */
-const frasesTyping = [
+/* ── TEXTOS LATERAIS — anima com delay ── */
+function animarTextosLaterais(){
+  const blocos=document.querySelectorAll(".bloco-romantico");
+  blocos.forEach((b,i)=>{
+    setTimeout(()=>b.classList.add("visivel-texto"),600+i*350);
+  });
+}
+
+/* ── TYPING ── */
+const frasesTyping=[
   "Algumas pessoas entram na nossa vida por acaso.",
   "Outras parecem ter sido destinadas a entrar.",
   "Você foi as duas coisas. 💜"
 ];
-
-function iniciarTyping() {
-  let fi = 0, ci = 0, apagando = false;
-  const el = document.getElementById("typing-text");
-
-  function tick() {
-    const frase = frasesTyping[fi];
-    if (!apagando) {
-      el.textContent = frase.slice(0, ++ci);
-      if (ci === frase.length) {
-        apagando = true;
-        setTimeout(tick, fi === frasesTyping.length - 1 ? 99999 : 2200);
-        return;
-      }
-      setTimeout(tick, 45);
+function iniciarTyping(){
+  let fi=0,ci=0,apagando=false;
+  const el=document.getElementById("typing-text");
+  function tick(){
+    const frase=frasesTyping[fi];
+    if(!apagando){
+      el.textContent=frase.slice(0,++ci);
+      if(ci===frase.length){apagando=true;setTimeout(tick,fi===frasesTyping.length-1?99999:2200);return;}
+      setTimeout(tick,45);
     } else {
-      el.textContent = frase.slice(0, --ci);
-      if (ci === 0) {
-        apagando = false;
-        fi = (fi + 1) % frasesTyping.length;
-        setTimeout(tick, 400);
-        return;
-      }
-      setTimeout(tick, 28);
+      el.textContent=frase.slice(0,--ci);
+      if(ci===0){apagando=false;fi=(fi+1)%frasesTyping.length;setTimeout(tick,400);return;}
+      setTimeout(tick,28);
     }
   }
-  setTimeout(tick, 600);
+  setTimeout(tick,600);
 }
 
-/* ============================================================
-   MÚSICA
-   ============================================================ */
-const musica = document.getElementById("musica");
-musica.volume = 0.25;
+/* ── MÚSICA ── */
+const musica=document.getElementById("musica");
+musica.volume=0.25;
 
-/* ============================================================
-   CONTADOR DE TEMPO
-   ============================================================ */
-// Data de início do relacionamento: 01/05/2026
-const INICIO = new Date("2026-05-01T00:00:00");
-
-function atualizarContadores() {
-  const agora = new Date();
-  const diff  = Math.max(0, agora - INICIO);
-
-  const seg   = Math.floor(diff / 1000);
-  const min   = Math.floor(seg / 60);
-  const horas = Math.floor(min / 60);
-  const dias  = Math.floor(horas / 24);
-
-  const s = seg % 60, m = min % 60, h = horas % 24;
-
-  // Seção surpresa
-  document.getElementById("sc-dias").textContent  = dias;
-  document.getElementById("sc-horas").textContent = String(h).padStart(2,"0");
-  document.getElementById("sc-min").textContent   = String(m).padStart(2,"0");
-  document.getElementById("sc-seg").textContent   = String(s).padStart(2,"0");
+/* ── CONTADOR ── */
+const INICIO=new Date("2026-05-01T00:00:00");
+function atualizarContadores(){
+  const diff=Math.max(0,new Date()-INICIO);
+  const seg=Math.floor(diff/1000),min=Math.floor(seg/60),
+        horas=Math.floor(min/60),dias=Math.floor(horas/24);
+  const s=seg%60,m=min%60,h=horas%24;
+  document.getElementById("sc-dias").textContent=dias;
+  document.getElementById("sc-horas").textContent=String(h).padStart(2,"0");
+  document.getElementById("sc-min").textContent=String(m).padStart(2,"0");
+  document.getElementById("sc-seg").textContent=String(s).padStart(2,"0");
 }
+atualizarContadores();setInterval(atualizarContadores,1000);
 
-atualizarContadores();
-setInterval(atualizarContadores, 1000);
-
-/* ============================================================
-   MODAL
-   ============================================================ */
-let memoriaAtual = 0, fotoAtual = 0;
-
-function abrir(indice) {
-  memoriaAtual = indice;
-  fotoAtual    = 0;
-  document.getElementById("modal").classList.add("aberto");
-  document.body.style.overflow = "hidden";
-  atualizar();
+/* ── MODAL ── */
+let memoriaAtual=0,fotoAtual=0;
+function abrir(i){memoriaAtual=i;fotoAtual=0;document.getElementById("modal").classList.add("aberto");document.body.style.overflow="hidden";atualizar();}
+function fechar(){document.getElementById("modal").classList.remove("aberto");document.body.style.overflow="";}
+function atualizar(fade=false){
+  const img=document.getElementById("imagemModal"),mem=memorias[memoriaAtual];
+  document.getElementById("tituloModal").textContent=mem.titulo;
+  document.getElementById("textoModal").textContent=mem.texto;
+  document.getElementById("contadorFotos").textContent=`Foto ${fotoAtual+1} de ${mem.fotos.length}`;
+  if(fade){img.classList.add("trocando");setTimeout(()=>{img.src=mem.fotos[fotoAtual];img.classList.remove("trocando");},220);}
+  else img.src=mem.fotos[fotoAtual];
 }
+function proxima(){fotoAtual=(fotoAtual+1)%memorias[memoriaAtual].fotos.length;atualizar(true);}
+function anterior(){const l=memorias[memoriaAtual].fotos.length;fotoAtual=(fotoAtual-1+l)%l;atualizar(true);}
+document.getElementById("modal").addEventListener("click",e=>{if(e.target===document.getElementById("modal"))fechar();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){fechar();fecharPoema();}});
 
-function fechar() {
-  document.getElementById("modal").classList.remove("aberto");
-  document.body.style.overflow = "";
+/* ── NOTIF + MODAL POEMA ── */
+let poemaAberto=false;
+function agendarPoemaNotif(){
+  setTimeout(()=>document.getElementById("poema-notif").classList.add("visivel"),40000);
 }
+function fecharNotif(){document.getElementById("poema-notif").classList.add("saindo");}
+function abrirPoema(){poemaAberto=true;fecharNotif();document.getElementById("poema-modal").classList.add("aberto");document.body.style.overflow="hidden";}
+function fecharPoema(){document.getElementById("poema-modal").classList.remove("aberto");document.body.style.overflow="";}
+document.getElementById("poema-modal").addEventListener("click",e=>{if(e.target===document.getElementById("poema-modal"))fecharPoema();});
 
-function atualizar(fade = false) {
-  const img = document.getElementById("imagemModal");
-  const mem = memorias[memoriaAtual];
-  document.getElementById("tituloModal").textContent = mem.titulo;
-  document.getElementById("textoModal").textContent  = mem.texto;
-  document.getElementById("contadorFotos").textContent = `Foto ${fotoAtual + 1} de ${mem.fotos.length}`;
-
-  if (fade) {
-    img.classList.add("trocando");
-    setTimeout(() => { img.src = mem.fotos[fotoAtual]; img.classList.remove("trocando"); }, 220);
-  } else {
-    img.src = mem.fotos[fotoAtual];
-  }
-}
-
-function proxima() { fotoAtual = (fotoAtual + 1) % memorias[memoriaAtual].fotos.length; atualizar(true); }
-function anterior() { const l = memorias[memoriaAtual].fotos.length; fotoAtual = (fotoAtual - 1 + l) % l; atualizar(true); }
-
-document.getElementById("modal").addEventListener("click", e => {
-  if (e.target === document.getElementById("modal")) fechar();
-});
-document.addEventListener("keydown", e => { if (e.key === "Escape") fechar(); });
-
-/* ============================================================
-   NOTIFICAÇÃO + MODAL POEMA
-   ============================================================ */
-let poemaAberto = false;
-
-function agendarPoemaNotif() {
-  setTimeout(() => {
-    document.getElementById("poema-notif").classList.add("visivel");
-  }, 40000);
-}
-
-function fecharNotif() {
-  const notif = document.getElementById("poema-notif");
-  notif.classList.add("saindo");
-}
-
-function abrirPoema() {
-  poemaAberto = true;
-  fecharNotif();
-  document.getElementById("poema-modal").classList.add("aberto");
-  document.body.style.overflow = "hidden";
-}
-
-function fecharPoema() {
-  document.getElementById("poema-modal").classList.remove("aberto");
-  document.body.style.overflow = "";
-}
-
-document.getElementById("poema-modal").addEventListener("click", e => {
-  if (e.target === document.getElementById("poema-modal")) fecharPoema();
-});
-
-/* ============================================================
-   SCROLL REVEAL
-   ============================================================ */
-const observer = new IntersectionObserver(entries => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      if (entry.target.classList.contains("card")) {
-        entry.target.style.animationDelay = `${i * 0.12}s`;
-      }
+/* ── SCROLL REVEAL ── */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach((entry,i)=>{
+    if(entry.isIntersecting){
+      if(entry.target.classList.contains("card"))
+        entry.target.style.transitionDelay=`${i*0.15}s`;
       entry.target.classList.add("visivel");
       observer.unobserve(entry.target);
     }
   });
-}, { threshold: 0.12 });
-
-document.querySelectorAll(".reveal, .card").forEach(el => observer.observe(el));
-
-/* ============================================================
-   MOBILE: TEXTOS ROTATIVOS
-   ============================================================ */
-if (window.innerWidth <= 768) {
-  const bE = document.querySelectorAll(".esquerda .bloco-romantico");
-  const bD = document.querySelectorAll(".direita .bloco-romantico");
-  let idx = 0;
-
-  function trocarTextos() {
-    bE.forEach(b => b.classList.remove("ativo"));
-    bD.forEach(b => b.classList.remove("ativo"));
-    bE[idx].classList.add("ativo");
-    bD[idx].classList.add("ativo");
-    idx = idx === 0 ? 1 : 0;
-  }
-
-  trocarTextos();
-  setInterval(trocarTextos, 8000);
-}
+},{threshold:0.1});
+document.querySelectorAll(".reveal,.card").forEach(el=>observer.observe(el));
 </script>
 </body>
 </html>
