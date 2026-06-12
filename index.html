@@ -313,7 +313,22 @@ footer h3{color:var(--rose-deep);margin-bottom:10px;font-size:1.4rem;}
   .videos-grid video:nth-child(3){display:none;}
 
   /* Esconde textos laterais — no mobile o centro já fala */
-  .texto-lateral{display:none;}
+  .texto-lateral{
+    display: block;
+    position: absolute;
+    width: 88%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 3;
+  }
+  .esquerda{ top: 5vh; }
+  .direita{ bottom: 5vh; top: auto; }
+  .bloco-romantico{ display:none; margin-bottom:1.5vh; }
+  .bloco-romantico.ativo{ display:block; }
+  .bloco-romantico h3{ font-size:clamp(1.3rem,5.5vw,2rem); line-height:1.15; margin-bottom:6px; }
+  .bloco-romantico p{ font-size:clamp(.85rem,3.5vw,1.05rem); line-height:1.35; }
+  .decoracao{ display:none; }
 
   /* Hero content mais legível */
   .hero-content{z-index:3;padding:24px;}
@@ -746,6 +761,22 @@ const observer=new IntersectionObserver(entries=>{
   });
 },{threshold:0.1});
 document.querySelectorAll(".reveal,.card").forEach(el=>observer.observe(el));
+/* ── MOBILE: TEXTOS ROTATIVOS ── */
+(function(){
+  const bE = document.querySelectorAll(".esquerda .bloco-romantico");
+  const bD = document.querySelectorAll(".direita .bloco-romantico");
+  if(!bE.length) return;
+  let idx = 0;
+  function trocar(){
+    bE.forEach(b=>b.classList.remove("ativo"));
+    bD.forEach(b=>b.classList.remove("ativo"));
+    bE[idx].classList.add("ativo");
+    bD[idx].classList.add("ativo");
+    idx = idx === 0 ? 1 : 0;
+  }
+  trocar();
+  setInterval(trocar, 8000);
+})();
 </script>
 </body>
 </html>
