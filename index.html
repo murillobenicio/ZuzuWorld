@@ -296,43 +296,37 @@ footer h3{color:var(--rose-deep);margin-bottom:10px;font-size:1.4rem;}
 .reveal.visivel{opacity:1;transform:translateY(0);}
 
 /* ================= RESPONSIVO ================= */
-@media(max-width:900px){
-  .galeria{grid-template-columns:1fr;}
-}
-
 @media(max-width:768px){
 
-  /* Hero: altura total da tela */
+  /* Hero menor que a tela → barras pretas do body aparecem em cima e embaixo */
   .hero {
-    height: 100svh;
+    height: 56vw;          /* ajuste esse valor conforme a proporção do seu vídeo */
+    min-height: 320px;
+    max-height: 70vh;
     position: relative;
     overflow: hidden;
-    background: #000; /* fundo preto — cria as barras */
+    background: #000;
   }
 
-  /* Grid vira container absoluto centralizado */
   .videos-grid {
     position: absolute;
     inset: 0;
-    display: flex;
-    align-items: center;     /* centraliza verticalmente → barras pretas em cima e baixo */
-    justify-content: center;
+    display: block;
   }
 
-  /* Apenas o primeiro vídeo aparece */
+  /* Apenas o primeiro vídeo */
+  .videos-grid video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex: none;
+  }
   .videos-grid video:nth-child(2),
   .videos-grid video:nth-child(3) { display: none; }
 
-  /* Vídeo: largura total, altura automática → sem corte lateral */
-  .videos-grid video {
-    position: static;        /* tira o absolute que você tinha */
-    width: 100%;
-    height: auto;            /* mantém proporção original do vídeo */
-    object-fit: unset;       /* desativa o cover */
-    flex: none;
-  }
-
-  /* Overlay escuro sobre o vídeo */
+  /* Overlay */
   .hero::after {
     content: '';
     position: absolute;
@@ -342,11 +336,9 @@ footer h3{color:var(--rose-deep);margin-bottom:10px;font-size:1.4rem;}
     pointer-events: none;
   }
 
-  /* Textos e conteúdo acima do overlay */
   .texto-lateral { z-index: 3; }
   .hero-content  { z-index: 4; }
 
-  /* Resto do mobile que já estava certo */
   .texto-lateral {
     display: block;
     position: absolute;
@@ -355,48 +347,48 @@ footer h3{color:var(--rose-deep);margin-bottom:10px;font-size:1.4rem;}
     transform: translateX(-50%);
     text-align: center;
   }
-  .esquerda { top: 5vh; }
-  .direita  { bottom: 5vh; top: auto; }
+  .esquerda { top: 5%; }
+  .direita  { bottom: 5%; top: auto; }
   .bloco-romantico        { display: none; margin-bottom: 1.5vh; }
   .bloco-romantico.ativo  { display: block; }
-  .bloco-romantico h3 { font-size: clamp(1.3rem,5.5vw,2rem); line-height:1.15; margin-bottom:6px; }
-  .bloco-romantico p  { font-size: clamp(.85rem,3.5vw,1.05rem); line-height:1.35; }
+  .bloco-romantico h3 { font-size: clamp(1.1rem,5vw,1.8rem); line-height:1.15; margin-bottom:6px; }
+  .bloco-romantico p  { font-size: clamp(.8rem,3.2vw,1rem); line-height:1.35; }
   .decoracao { display: none; }
 
-  .hero-content { padding: 24px; }
-  .hero-content h1 { font-size: clamp(2rem,8vw,3rem); }
-  .hero-content p  { font-size: clamp(.9rem,3.8vw,1.1rem); max-width: 90%; }
+  .hero-content { padding: 16px; }
+  .hero-content h1 { font-size: clamp(1.6rem,7vw,2.5rem); }
+  .hero-content p  { font-size: clamp(.85rem,3.5vw,1rem); max-width: 90%; }
 
   /* Galeria */
-  .galeria-section{width:100%;padding:50px 16px 40px;}
-  .card-thumb{height:240px;}
+  .galeria-section { width:100%; padding:50px 16px 40px; }
+  .card-thumb { height:240px; }
 
   /* Surpresa */
-  .surpresa-section{width:100%;padding:10px 16px 60px;}
-  .surpresa-wrap{padding:36px 20px;border-radius:22px;}
-  .surpresa-contador-grande{gap:10px;}
-  .sc-item{padding:12px 14px;min-width:68px;}
-  .sc-num{font-size:2rem;}
-  .sc-label{font-size:.62rem;}
+  .surpresa-section { width:100%; padding:10px 16px 60px; }
+  .surpresa-wrap { padding:36px 20px; border-radius:22px; }
+  .surpresa-contador-grande { gap:10px; }
+  .sc-item { padding:12px 14px; min-width:68px; }
+  .sc-num  { font-size:2rem; }
+  .sc-label { font-size:.62rem; }
 
   /* Modal memórias */
-  .modal-content{flex-direction:column;width:96%;max-height:92vh;overflow-y:auto;min-height:unset;}
-  .modal-img-wrap{width:100%;padding:0;height:38vmax;max-height:280px;}
-  .modal-img{width:100%;height:100%;object-fit:cover;border-radius:0;max-height:unset;}
-  .modal-body{width:100%;padding:20px 16px;}
-  .modal-body h2{font-size:clamp(1.3rem,5vw,1.7rem);}
-  .modal-body p{font-size:clamp(.88rem,3.4vw,1rem);}
-  .fechar{font-size:36px;top:10px;right:14px;}
+  .modal-content { flex-direction:column; width:96%; max-height:92vh; overflow-y:auto; min-height:unset; }
+  .modal-img-wrap { width:100%; padding:0; height:38vmax; max-height:280px; }
+  .modal-img { width:100%; height:100%; object-fit:cover; border-radius:0; max-height:unset; }
+  .modal-body { width:100%; padding:20px 16px; }
+  .modal-body h2 { font-size:clamp(1.3rem,5vw,1.7rem); }
+  .modal-body p  { font-size:clamp(.88rem,3.4vw,1rem); }
+  .fechar { font-size:36px; top:10px; right:14px; }
 
   /* Auth */
-  .auth-card{padding:36px 22px;}
+  .auth-card { padding:36px 22px; }
 
   /* Notif */
-  #poema-notif{bottom:16px;right:12px;max-width:250px;padding:13px 32px 13px 14px;}
+  #poema-notif { bottom:16px; right:12px; max-width:250px; padding:13px 32px 13px 14px; }
 
   /* Modal poema */
-  .poema-modal-content{padding:44px 20px;border-radius:22px;}
-  .poema-verso{font-size:clamp(1.1rem,4vw,1.4rem);}
+  .poema-modal-content { padding:44px 20px; border-radius:22px; }
+  .poema-verso { font-size:clamp(1.1rem,4vw,1.4rem); }
 }
 </style>
 </head>
