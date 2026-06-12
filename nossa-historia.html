@@ -661,12 +661,13 @@ footer h3 { color:var(--rose-deep); margin-bottom:10px; font-size:1.4rem; }
 
 /* ================= RESPONSIVO ================= */
 @media (max-width:768px) {
+  /* Hero: mantém o grid de vídeos absoluto, hero tem altura fixa */
   .hero {
     height: 100svh;
-    min-height: 580px;
+    min-height: 600px;
+    padding-bottom: 0;
   }
 
-  /* Hero mobile: mostra só o primeiro vídeo em tela cheia */
   .videos-grid {
     flex-direction: column;
     position: absolute;
@@ -675,20 +676,21 @@ footer h3 { color:var(--rose-deep); margin-bottom:10px; font-size:1.4rem; }
 
   .videos-grid video {
     width: 100%;
-    height: 100%;
+    height: 33.33%;
     flex: none;
-    position: absolute;
-    inset: 0;
-    object-fit: cover;
   }
 
-  /* Esconde o segundo e terceiro vídeo no mobile */
-  .videos-grid video:nth-child(2),
-  .videos-grid video:nth-child(3) {
-    display: none;
-  }
+  .texto-lateral { position:absolute; width:90%; left:50%; transform:translateX(-50%); z-index:3; text-align:center; }
+  .esquerda { top:2vh; }
+  .direita  { top:auto; bottom:5vh; left:50%; transform:translateX(-50%); }
 
-  .texto-lateral { display: none; }
+  .bloco-romantico { display:none; margin-bottom:2vh; }
+  .bloco-romantico.ativo { display:block; }
+
+  .bloco-romantico h3 { font-size:clamp(1.5rem,6vw,2.2rem); line-height:1.1; margin-bottom:8px; }
+  .bloco-romantico p  { font-size:clamp(.95rem,3.8vw,1.2rem); line-height:1.3; }
+
+  .decoracao { display:none; }
 
   .hero-content {
     position:absolute; inset:0;
@@ -964,6 +966,7 @@ footer h3 { color:var(--rose-deep); margin-bottom:10px; font-size:1.4rem; }
   <div class="poema-modal-content">
     <span class="poema-modal-fechar" onclick="fecharPoema()">✕</span>
     <h2 class="poema-titulo">✦ Para Você ✦</h2>
+
 
     <p class="poema-verso">
 Você me reflete o amarelo;
